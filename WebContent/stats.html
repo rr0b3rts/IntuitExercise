@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+	<title>Intuit Exercise - Domain stats</title>
+	<script>
+		function getStats() {
+		    var xhttp = new XMLHttpRequest();
+		    xhttp.open("GET", "http://localhost:8080/IntuitExercise/rest/URLService/stats", false);
+		    xhttp.setRequestHeader("Content-type", "application/json");
+		    xhttp.send();
+		    var response = JSON.parse(xhttp.responseText);
+		    
+		    var result = "<table border='1'>";
+		    result += "<tr bgcolor='#c0c0c0'><th>Domain</th><th>Count</th></tr>";
+		    
+		    for(var i=0; i < 5; i++) {
+		    	if(!("undefined" === typeof response["domain" + i])) {
+				    result += "<tr>";
+				    result += "<td>" + response["domain" + i] + "</td>";
+					result += "<td align='right'>" + response["domainCount" + i] + "</td>";
+				    
+					result += "</tr>";
+		    	}
+		    }
+		    result += "</table>";
+		    
+		    document.getElementById("stats").innerHTML = result;
+		}
+	</script>
+</head>
+<body>
+
+	<button type="submit" onclick="getStats()">Display Stats</button>
+	<p>
+	<div id="stats"></div>
+
+</body>
+</html>
